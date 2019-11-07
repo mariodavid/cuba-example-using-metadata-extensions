@@ -2,5 +2,6 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-ceume" insertBefore="administration">
         <item screen="ceume_EntityAttributeDescription.browse"/>
+        <item screen="ceume_Customer.browse"/>
     </menu>
 </menu-config>

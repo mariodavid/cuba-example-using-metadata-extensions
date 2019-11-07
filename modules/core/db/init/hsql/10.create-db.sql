@@ -17,3 +17,21 @@ create table CEUME_ENTITY_ATTRIBUTE_DESCRIPTION (
     primary key (ID)
 )^
 -- end CEUME_ENTITY_ATTRIBUTE_DESCRIPTION
+-- begin CEUME_CUSTOMER
+create table CEUME_CUSTOMER (
+    ID varchar(36) not null,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    FIRST_NAME varchar(255),
+    NAME varchar(255),
+    BIRTHDAY date,
+    --
+    primary key (ID)
+)^
+-- end CEUME_CUSTOMER

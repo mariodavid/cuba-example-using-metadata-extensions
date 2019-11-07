@@ -3,5 +3,6 @@
     <persistence-unit name="cuba-example-using-metadata-extensions" transaction-type="RESOURCE_LOCAL">
 
         <class>com.company.ceume.entity.EntityAttributeDescription</class>
+        <class>com.company.ceume.entity.Customer</class>
     </persistence-unit>
 </persistence>
