@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="productsTable"
+        xmlns:ddcme="http://schemas.diedavids.de/metadataextensions/0.1/ui-component.xsd"
+        messagesPack="com.company.ceume.web.screens.product">
+    <data>
+        <collection id="productsDc"
+                    class="com.company.ceume.entity.Product"
+                    view="_local">
+            <loader id="productsDl">
+                <query>
+                    <![CDATA[select e from ceume_Product e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <ddcme:entityDialog
+                id="createLaptopDialog"
+                entityClass="com.company.ceume.entity.Product"
+                onAction="createLaptop"
+                caption="msg://createLaptop"
+        >
+            <ddcme:parameters>
+                <ddcme:entityAttributeParameter id="name" property="name" autoBinding="true" />
+            </ddcme:parameters>
+        </ddcme:entityDialog>
+    </facets>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="productsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="productsTable"
+                dataLoader="productsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="productsTable"
+                    width="100%"
+                    dataContainer="productsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="createLaptop" caption="msg://createLaptop" icon="font-icon:LAPTOP"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="type"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="productsTable.create"/>
+                <button id="editBtn" action="productsTable.edit"/>
+                <button id="removeBtn" action="productsTable.remove"/>
+                <button id="createLaptopBtn" action="productsTable.createLaptop"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

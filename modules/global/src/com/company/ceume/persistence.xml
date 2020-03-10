@@ -4,5 +4,6 @@
 
         <class>com.company.ceume.entity.EntityAttributeDescription</class>
         <class>com.company.ceume.entity.Customer</class>
+        <class>com.company.ceume.entity.Product</class>
     </persistence-unit>
 </persistence>
