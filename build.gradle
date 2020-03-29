@@ -185,7 +185,7 @@ configure(webModule) {
         compile(globalModule)
 
 
-        testCompile('de.diedavids.sneferu:sneferu:0.2.1-SNAPSHOT')
+        testCompile('de.diedavids.sneferu:sneferu:0.2.1')
     }
 
     task webArchive(type: Zip) {
