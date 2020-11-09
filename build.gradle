@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '7.2.0'
+    ext.cubaVersion = '7.2.2'
     repositories {
 
         mavenLocal()
@@ -44,7 +44,7 @@ cuba {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent('de.diedavids.cuba.metadataextensions:metadataextensions-global:0.3.1')
+    appComponent('de.diedavids.cuba.metadataextensions:metadataextensions-global:0.4.0-SNAPSHOT')
     appComponent('de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.7.0')
 }
 
@@ -56,7 +56,20 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'cuba')
 
     dependencies {
-        testCompile('junit:junit:4.12')
+
+        testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
+        testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
+        testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')
+
+        testCompile 'org.mockito:mockito-core:3.2.4'
+        testCompile 'org.mockito:mockito-junit-jupiter:3.2.4'
+
+
+        testCompile('org.spockframework:spock-core:1.2-groovy-2.5')
+        testCompile('org.springframework:spring-test:4.3.1.RELEASE')
+
+
+        testCompile("org.assertj:assertj-core:3.11.1")
     }
 
     task sourceJar(type: Jar) {
@@ -67,6 +80,32 @@ configure([globalModule, coreModule, webModule]) {
     artifacts {
         archives sourceJar
     }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+configure([globalModule, coreModule, webModule]) {
+    apply(plugin: 'groovy')
+
+    sourceSets {
+        main {
+            groovy { srcDirs = ["src"] }
+            // new config
+            java.outputDir = new File(project.buildDir, "classes/main")
+            groovy.outputDir = new File(project.buildDir, "classes/main")
+        }
+        test {
+            groovy { srcDirs = ["test"] }
+            // new config
+            java.outputDir = new File(project.buildDir, "classes/test")
+            groovy.outputDir = new File(project.buildDir, "classes/test")
+        }
+    }
+    sourceSets.main.output.classesDirs.setFrom(new File(project.buildDir, "classes/main"))
+    sourceSets.test.output.classesDirs.setFrom(new File(project.buildDir, "classes/test"))
+
 }
 
 configure(globalModule) {
@@ -81,11 +120,23 @@ configure(globalModule) {
         main {
             enabled = true
         }
+        test {
+            enabled = true
+        }
     }
 }
 
 configure(coreModule) {
 
+    entitiesEnhancing {
+        main {
+            enabled = true
+        }
+        test {
+            enabled = true
+        }
+
+    }
     configurations {
         jdbc
         dbscripts
@@ -132,6 +183,9 @@ configure(webModule) {
     dependencies {
         compileOnly(servletApi)
         compile(globalModule)
+
+
+        testCompile('de.diedavids.sneferu:sneferu:0.2.1')
     }
 
     task webArchive(type: Zip) {
